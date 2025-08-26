@@ -25,10 +25,14 @@ jobs:
 
      - name: Trivy Installation
        run: |
-        sudo apt-get install wget gnupg wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
-        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
         sudo apt-get update -y
-        sudo apt-get install trivy -y
+        sudo apt-get install -y wget gnupg
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | \
+          gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | \
+          sudo tee /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update -y
+        sudo apt-get install -y trivy
     
      - name: Trivy FS Scan
        run: trivy fs --format table -o fs-report.json .
@@ -36,7 +40,7 @@ jobs:
      - name: Gitleaks Installation
        run: sudo apt install gitleaks -y
      - name: Gitleaks Code Scan
-       run: gitleaks detect source . -r gitleaks-report.json -f json       
+       run: gitleaks detect --source . --report-path gitleaks-report.json --format json       
      
 
 
