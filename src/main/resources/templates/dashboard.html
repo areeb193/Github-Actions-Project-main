@@ -128,6 +128,10 @@
     <div class="text-center">
         <h2 th:text="'Welcome, ' + ${account.username}"></h2>
         <h3 th:text="'Current Balance: $' + ${account.balance}"></h3>
+        <div class="alert alert-success mt-4" role="alert">
+            <strong>CI/CD Pipeline Demo:</strong> This dashboard was updated for a video demonstration.<br>
+            <span style="font-size:1.2em;">🎬 Watch how changes are automatically built, tested, and scanned!</span>
+        </div>
     </div>
 
     <!-- Account Details Section -->
